@@ -30,7 +30,7 @@ import java.io.IOException;
 public class Draw {
 
     /** main entry point. Just create an instance of this application class */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         new Draw();
     }
 
@@ -42,11 +42,11 @@ public class Draw {
     }
 
     /** This is the application method that processes commands sent by the GUI */
-    public void doCommand(String command) {
+    public void doCommand(final String command) {
         if (command.equals("clear")) { // clear the GUI window
             // It would be more modular to include this functionality in the GUI
             // class itself. But for demonstration purposes, we do it here.
-            Graphics g = this.window.getGraphics();
+            final Graphics g = this.window.getGraphics();
             g.setColor(this.window.getBackground());
             g.fillRect(0, 0, this.window.getSize().width, this.window.getSize().height);
         }
@@ -55,6 +55,7 @@ public class Draw {
             System.exit(0); // and exit.
         }
     }
+
 }
 
 /** This class implements the GUI for our application */
@@ -69,27 +70,27 @@ class DrawGUI extends Frame {
      * anonymous classes.
      */
     @SuppressWarnings("deprecation")
-    public DrawGUI(Draw application) {
+    public DrawGUI(final Draw application) {
         super("Draw"); // Create the window
         this.app = application; // Remember the application reference
         this.color = Color.black; // the current drawing color
 
         // selector for drawing modes
-        Choice shape_chooser = new Choice();
+        final Choice shape_chooser = new Choice();
         shape_chooser.add("Scribble");
         shape_chooser.add("Rectangle");
         shape_chooser.add("Oval");
 
         // selector for drawing colors
-        Choice color_chooser = new Choice();
+        final Choice color_chooser = new Choice();
         color_chooser.add("Black");
         color_chooser.add("Green");
         color_chooser.add("Red");
         color_chooser.add("Blue");
 
         // Create two buttons
-        Button clear = new Button("Clear");
-        Button quit = new Button("Quit");
+        final Button clear = new Button("Clear");
+        final Button quit = new Button("Quit");
 
         // Set a LayoutManager, and add the choosers and buttons to the window.
         this.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
@@ -103,14 +104,14 @@ class DrawGUI extends Frame {
         // Here's a local class used for action listeners for the buttons
         class DrawActionListener implements ActionListener {
 
-            private String command;
+            private final String command;
 
-            public DrawActionListener(String cmd) {
+            public DrawActionListener(final String cmd) {
                 this.command = cmd;
             }
 
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(final ActionEvent e) {
                 DrawGUI.this.app.doCommand(this.command);
             }
         }
@@ -127,11 +128,11 @@ class DrawGUI extends Frame {
             class OvalDrawer extends RectangleDrawer {
 
                 @Override
-                public void doDraw(int x0, int y0, int x1, int y1, Graphics g) {
-                    int x = Math.min(x0, x1);
-                    int y = Math.min(y0, y1);
-                    int w = Math.abs(x1 - x0);
-                    int h = Math.abs(y1 - y0);
+                public void doDraw(final int x0, final int y0, final int x1, final int y1, final Graphics g) {
+                    final int x = Math.min(x0, x1);
+                    final int y = Math.min(y0, y1);
+                    final int w = Math.abs(x1 - x0);
+                    final int h = Math.abs(y1 - y0);
                     // draw oval instead of rectangle
                     g.drawOval(x, y, w, h);
                 }
@@ -143,12 +144,12 @@ class DrawGUI extends Frame {
                 int pressx, pressy;
                 int lastx = -1, lasty = -1;
 
-                public void doDraw(int x0, int y0, int x1, int y1, Graphics g) {
+                public void doDraw(final int x0, final int y0, final int x1, final int y1, final Graphics g) {
                     // calculate upperleft and width/height of rectangle
-                    int x = Math.min(x0, x1);
-                    int y = Math.min(y0, y1);
-                    int w = Math.abs(x1 - x0);
-                    int h = Math.abs(y1 - y0);
+                    final int x = Math.min(x0, x1);
+                    final int y = Math.min(y0, y1);
+                    final int w = Math.abs(x1 - x0);
+                    final int h = Math.abs(y1 - y0);
                     // draw rectangle
                     g.drawRect(x, y, w, h);
                 }
@@ -156,8 +157,8 @@ class DrawGUI extends Frame {
                 // mouse released => temporarily set second corner of rectangle
                 // draw the resulting shape in "rubber-band mode"
                 @Override
-                public void mouseDragged(MouseEvent e) {
-                    Graphics g = ShapeManager.this.gui.getGraphics();
+                public void mouseDragged(final MouseEvent e) {
+                    final Graphics g = ShapeManager.this.gui.getGraphics();
                     // these commands set the rubberband mode
                     g.setXORMode(ShapeManager.this.gui.color);
                     g.setColor(ShapeManager.this.gui.getBackground());
@@ -174,7 +175,7 @@ class DrawGUI extends Frame {
 
                 // mouse pressed => fix first corner of rectangle
                 @Override
-                public void mousePressed(MouseEvent e) {
+                public void mousePressed(final MouseEvent e) {
                     this.pressx = e.getX();
                     this.pressy = e.getY();
                 }
@@ -182,8 +183,8 @@ class DrawGUI extends Frame {
                 // mouse released => fix second corner of rectangle
                 // and draw the resulting shape
                 @Override
-                public void mouseReleased(MouseEvent e) {
-                    Graphics g = ShapeManager.this.gui.getGraphics();
+                public void mouseReleased(final MouseEvent e) {
+                    final Graphics g = ShapeManager.this.gui.getGraphics();
                     if (this.lastx != -1) {
                         // first undraw a rubber rect
                         g.setXORMode(ShapeManager.this.gui.color);
@@ -206,9 +207,9 @@ class DrawGUI extends Frame {
                 int lastx, lasty;
 
                 @Override
-                public void mouseDragged(MouseEvent e) {
-                    Graphics g = ShapeManager.this.gui.getGraphics();
-                    int x = e.getX(), y = e.getY();
+                public void mouseDragged(final MouseEvent e) {
+                    final Graphics g = ShapeManager.this.gui.getGraphics();
+                    final int x = e.getX(), y = e.getY();
                     g.setColor(ShapeManager.this.gui.color);
                     g.setPaintMode();
                     g.drawLine(this.lastx, this.lasty, x, y);
@@ -217,7 +218,7 @@ class DrawGUI extends Frame {
                 }
 
                 @Override
-                public void mousePressed(MouseEvent e) {
+                public void mousePressed(final MouseEvent e) {
                     this.lastx = e.getX();
                     this.lasty = e.getY();
                 }
@@ -226,7 +227,7 @@ class DrawGUI extends Frame {
             abstract class ShapeDrawer extends MouseAdapter implements MouseMotionListener {
 
                 @Override
-                public void mouseMoved(MouseEvent e) {
+                public void mouseMoved(final MouseEvent e) {
                     /* ignore */ }
             }
 
@@ -237,7 +238,7 @@ class DrawGUI extends Frame {
             OvalDrawer ovalDrawer = new OvalDrawer();
             ShapeDrawer currentDrawer;
 
-            public ShapeManager(DrawGUI itsGui) {
+            public ShapeManager(final DrawGUI itsGui) {
                 this.gui = itsGui;
                 // default: scribble mode
                 this.currentDrawer = this.scribbleDrawer;
@@ -248,7 +249,7 @@ class DrawGUI extends Frame {
 
             // user selected new shape => reset the shape mode
             @Override
-            public void itemStateChanged(ItemEvent e) {
+            public void itemStateChanged(final ItemEvent e) {
                 if (e.getItem().equals("Scribble")) {
                     this.setCurrentDrawer(this.scribbleDrawer);
                 }
@@ -261,7 +262,7 @@ class DrawGUI extends Frame {
             }
 
             // reset the shape drawer
-            public void setCurrentDrawer(ShapeDrawer l) {
+            public void setCurrentDrawer(final ShapeDrawer l) {
                 if (this.currentDrawer == l) {
                     return;
                 }
@@ -276,13 +277,14 @@ class DrawGUI extends Frame {
             }
         }
 
-        shape_chooser.addItemListener(new ShapeManager(this));
+        final ShapeManager shapeManager = new ShapeManager(this);
+        shape_chooser.addItemListener(shapeManager);
 
         class ColorItemListener implements ItemListener {
 
             // user selected new color => store new color in DrawGUI
             @Override
-            public void itemStateChanged(ItemEvent e) {
+            public void itemStateChanged(final ItemEvent e) {
                 if (e.getItem().equals("Black")) {
                     DrawGUI.this.color = Color.black;
                 }
@@ -304,7 +306,7 @@ class DrawGUI extends Frame {
         this.addWindowListener(new WindowAdapter() {
 
             @Override
-            public void windowClosing(WindowEvent e) {
+            public void windowClosing(final WindowEvent e) {
                 DrawGUI.this.app.doCommand("quit");
             }
         });
