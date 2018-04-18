@@ -34,40 +34,11 @@ public class Draw {
         new Draw();
     }
 
-    protected DrawGUI window;
+    protected Frame window;
 
     /** Application constructor: create an instance of our GUI class */
     public Draw() {
         this.window = new DrawGUI(this);
-    }
-
-    public void autoDraw() {
-        // TODO autoDraw
-    }
-
-    public void clear() {
-        // TODO clear
-    }
-
-    private Color convertColorNameToColor(String colorString) throws ColorException {
-        if (colorString.equals("Black")) {
-            return Color.black;
-        }
-        else if (colorString.equals("Green")) {
-            return Color.green;
-        }
-        else if (colorString.equals("Red")) {
-            return Color.red;
-        }
-        else if (colorString.equals("Blue")) {
-            return Color.blue;
-        }
-        else if (colorString.equals("White")) {
-            return Color.white;
-        }
-        else {
-            throw new ColorException();
-        }
     }
 
     /** This is the application method that processes commands sent by the GUI */
@@ -83,69 +54,6 @@ public class Draw {
             this.window.dispose(); // close the GUI
             System.exit(0); // and exit.
         }
-    }
-
-    public void drawOval(Point upper_left, Point lower_right) {
-        // TODO drawOval
-    }
-
-    public void drawPolyLine(java.util.List<Point> points) {
-        // TODO drawPolyline
-    }
-
-    public void drawRectangle(Point upper_left, Point lower_right) {
-        // TODO drawRectangle
-    }
-
-    public String getBGColor() {
-        return (this.window.getBackground()).toString();
-    }
-
-    public Image getDrawing() {
-        return null;
-        // TODO getDrawing
-    }
-
-    public String getFGColor() {
-        return (this.window.color).toString();
-    }
-
-    public int getHeight() {
-        return this.window.getHeight();
-    }
-
-    public int getWidth() {
-        return this.window.getWidth();
-    }
-
-    public Image readImage(String filename) throws IOException {
-        return null;
-        // TODO readImage
-    }
-
-    public void setBGColor(String new_color) throws ColorException {
-        Color color = this.convertColorNameToColor(new_color);
-        this.window.setBackground(color);
-    }
-
-    public void setFGColor(String new_color) throws ColorException {
-        if (new_color.equals("white")) {
-            throw new ColorException("White is not an acceptabe color here.");
-        }
-        Color color = this.convertColorNameToColor(new_color);
-        this.window.color = color;
-    }
-
-    public void setHeight(int height) {
-        this.window.setSize(this.window.getWidth(), height);
-    }
-
-    public void setWidth(int width) {
-        this.window.setSize(width, this.window.getHeight());
-    }
-
-    public void writeImage(Image img, String filename) throws IOException {
-        // TODO writeImage
     }
 }
 
@@ -405,6 +313,100 @@ class DrawGUI extends Frame {
         this.setSize(500, 400);
         this.setBackground(Color.white);
         this.show();
+    }
+
+    public void autoDraw() {
+        // TODO autoDraw
+    }
+
+    public void clear() {
+        // TODO clear
+    }
+
+    private Color convertColorNameToColor(String colorString) throws ColorException {
+        if (colorString.equals("Black")) {
+            return Color.black;
+        }
+        else if (colorString.equals("Green")) {
+            return Color.green;
+        }
+        else if (colorString.equals("Red")) {
+            return Color.red;
+        }
+        else if (colorString.equals("Blue")) {
+            return Color.blue;
+        }
+        else if (colorString.equals("White")) {
+            return Color.white;
+        }
+        else {
+            throw new ColorException();
+        }
+    }
+
+    public void drawOval(Point upper_left, Point lower_right) {
+        // TODO drawOval
+    }
+
+    public void drawPolyLine(java.util.List<Point> points) {
+        // TODO drawPolyline
+    }
+
+    public void drawRectangle(Point upper_left, Point lower_right) {
+        // TODO drawRectangle
+    }
+
+    public String getBGColor() {
+        return (this.getBackground()).toString();
+    }
+
+    public Image getDrawing() {
+        return null;
+        // TODO getDrawing
+    }
+
+    public String getFGColor() {
+        return (this.color).toString();
+    }
+
+    @Override
+    public int getHeight() {
+        return this.getHeight();
+    }
+
+    @Override
+    public int getWidth() {
+        return this.getWidth();
+    }
+
+    public Image readImage(String filename) throws IOException {
+        return null;
+        // TODO readImage
+    }
+
+    public void setBGColor(String new_color) throws ColorException {
+        Color color = this.convertColorNameToColor(new_color);
+        this.setBackground(color);
+    }
+
+    public void setFGColor(String new_color) throws ColorException {
+        if (new_color.equals("white")) {
+            throw new ColorException("White is not an acceptabe color here.");
+        }
+        Color color = this.convertColorNameToColor(new_color);
+        this.color = color;
+    }
+
+    public void setHeight(int height) {
+        this.setSize(this.getWidth(), height);
+    }
+
+    public void setWidth(int width) {
+        this.setSize(width, this.getHeight());
+    }
+
+    public void writeImage(Image img, String filename) throws IOException {
+        // TODO writeImage
     }
 
 }
